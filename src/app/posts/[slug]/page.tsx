@@ -1,7 +1,6 @@
 import ReactMarkdown from 'react-markdown';
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import { getPostData, getPostSlugs } from '@/utils/posts';
+import { notFound } from 'next/navigation';
 
 interface PostProps {
   params: {
@@ -9,18 +8,15 @@ interface PostProps {
   };
 }
 
-const getPostData = (slug: string) => {
-  const postsDirectory = path.join(process.cwd(), 'content', 'posts');
-  const filePath = path.join(postsDirectory, `${slug}.md`);
-  const fileContents = fs.readFileSync(filePath, 'utf8');
-  const { content, data } = matter(fileContents);
-
-  return { content, frontMatter: data };
-};
-
 const Post: React.FC<PostProps> = ({ params }) => {
-  const { content, frontMatter } = getPostData(params.slug);
+  const postData = getPostData(params.slug);
 
+  if (!postData) {
+    notFound();
+    return null;
+  }
+
+  const { content, frontMatter } = postData;
   return (
     <div className="prose mx-auto">
       <h1>{frontMatter.title}</h1>
@@ -30,9 +26,13 @@ const Post: React.FC<PostProps> = ({ params }) => {
   );
 };
 
+/**
+ * Используется для генерации статических параметров (в нашем случае, параметров маршрутов) для страниц Next.js при сборке как в SSG.
+ */
 export async function generateStaticParams() {
-  const postsDirectory = path.join(process.cwd(), 'content', 'posts');
-  const filenames = fs.readdirSync(postsDirectory);
+  const filenames = getPostSlugs();
+
+  // Это нужно, чтобы получить чистое имя файла без расширения, которое будет использоваться как параметр маршрута (slug).
   const paths = filenames.map((filename) => ({
     slug: filename.replace(/\.md$/, ''),
   }));
