@@ -2,6 +2,9 @@ import ReactMarkdown from 'react-markdown';
 import { getPostData, getPostSlugs } from '@/utils/posts';
 import { notFound } from 'next/navigation';
 
+import rehypeRaw from 'rehype-raw';
+import CustomHeading from '@/app/posts/CustomHeading';
+
 interface PostProps {
   params: {
     slug: string;
@@ -21,7 +24,14 @@ const Post: React.FC<PostProps> = ({ params }) => {
     <div className="prose mx-auto">
       <h1>{frontMatter.title}</h1>
       <p>{frontMatter.date}</p>
-      <ReactMarkdown>{content}</ReactMarkdown>
+      <ReactMarkdown
+        rehypePlugins={[rehypeRaw]}
+        components={{
+          h2: CustomHeading, //  Property 'children' is optional in type 'ClassAttributes<HTMLHeadingElement> & HTMLAttributes<HTMLHeadingElement> & ExtraProps' but required in type 'CustomHeadingProps'
+        }}
+      >
+        {content}
+      </ReactMarkdown>
     </div>
   );
 };
