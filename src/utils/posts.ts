@@ -10,7 +10,7 @@ import matter from 'gray-matter';
  */
 const postsDirectory = path.join(process.cwd(), 'content', 'posts');
 
-export const getPostSlugs = () => {
+export const getPostFileNames = () => {
   /**
    * fs.readdirSync(postsDirectory) читает содержимое директории postsDirectory и возвращает массив имен файлов в этой директории.
    * Это синхронный метод из модуля fs (файловой системы) Node.js. В результате filenames будет массивом, содержащим имена

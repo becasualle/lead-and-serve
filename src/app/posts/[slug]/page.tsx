@@ -1,5 +1,5 @@
 import ReactMarkdown from 'react-markdown';
-import { getPostData, getPostSlugs } from '@/utils/posts';
+import { getPostData, getPostFileNames } from '@/utils/posts';
 import { notFound } from 'next/navigation';
 
 import rehypeRaw from 'rehype-raw';
@@ -11,7 +11,7 @@ interface PostProps {
   };
 }
 
-const Post: React.FC<PostProps> = ({ params }) => {
+function Post({ params }: PostProps) {
   const postData = getPostData(params.slug);
 
   if (!postData) {
@@ -34,19 +34,20 @@ const Post: React.FC<PostProps> = ({ params }) => {
       </ReactMarkdown>
     </div>
   );
-};
+}
 
 /**
  * Используется для генерации статических параметров (в нашем случае, параметров маршрутов) для страниц Next.js при сборке как в SSG.
  */
 export async function generateStaticParams() {
-  const filenames = getPostSlugs();
+  const filenames = getPostFileNames();
 
   // Это нужно, чтобы получить чистое имя файла без расширения, которое будет использоваться как параметр маршрута (slug).
   const paths = filenames.map((filename) => ({
     slug: filename.replace(/\.md$/, ''),
   }));
 
+  console.log(paths);
   return paths;
 }
 
