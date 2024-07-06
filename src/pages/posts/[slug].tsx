@@ -4,7 +4,6 @@ import ReactMarkdown from 'react-markdown';
 
 import rehypeRaw from 'rehype-raw';
 import CustomHeading from '@/components/CustomHeading';
-import PostLayout from '@/components/PostLayout';
 
 interface Params {
   params: {
@@ -49,19 +48,17 @@ export default function Post({ postData }: Props) {
 
   const { content, frontMatter } = postData;
   return (
-    <PostLayout>
-      <div className="prose mx-auto">
-        <h1>{frontMatter.title}</h1>
-        <p>{frontMatter.date}</p>
-        <ReactMarkdown
-          rehypePlugins={[rehypeRaw]}
-          components={{
-            h2: CustomHeading,
-          }}
-        >
-          {content}
-        </ReactMarkdown>
-      </div>
-    </PostLayout>
+    <div className="prose mx-auto">
+      <h1>{frontMatter.title}</h1>
+      <p>{frontMatter.date}</p>
+      <ReactMarkdown
+        rehypePlugins={[rehypeRaw]}
+        components={{
+          h2: CustomHeading,
+        }}
+      >
+        {content}
+      </ReactMarkdown>
+    </div>
   );
 }
