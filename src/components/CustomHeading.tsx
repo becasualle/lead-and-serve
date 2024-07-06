@@ -5,7 +5,11 @@ interface CustomHeadingProps {
 }
 
 function CustomHeading({ children }: CustomHeadingProps) {
-  return <h2 className="text-2xl">{children}</h2>;
+  return (
+    <>
+      <h2 className="text-2xl">{children}</h2>
+    </>
+  );
 }
 
 export default CustomHeading;
