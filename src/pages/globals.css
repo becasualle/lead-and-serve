@@ -6,7 +6,7 @@
   @apply antialiased;
 }
 body {
-  @apply bg-rose-50 text-gray-900;
+  @apply bg-polka text-gray-900;
 }
 
 .dark body {
