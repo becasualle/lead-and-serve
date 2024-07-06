@@ -16,6 +16,10 @@ const config: Config = {
       colors: {
         polka: '#f0ece0',
       },
+      fontFamily: {
+        sans: ['var(--font-open-sans)', 'sans-serif'],
+        serif: ['var(--font-pt-serif)', 'serif'],
+      },
     },
   },
   plugins: [],

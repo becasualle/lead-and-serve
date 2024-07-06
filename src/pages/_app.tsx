@@ -2,6 +2,7 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 import '@/pages/globals.css';
 import { useTheme } from '@/hooks/useTheme';
+import { ptSerif, openSans } from '@/utils/fonts';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { theme, toggleTheme } = useTheme();
@@ -16,7 +17,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <p>{theme}</p>
         <button onClick={toggleTheme}>toggle</button>
       </div>
-      <Component {...pageProps} />
+      <main className={`${openSans.variable} ${ptSerif.variable}`}>
+        <Component {...pageProps} />
+      </main>
     </>
   );
 }
